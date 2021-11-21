@@ -30,7 +30,7 @@ buildscript {
 allprojects {
     ext.buildTimestamp = BUILD_TIMESTAMP
     ext.buildVersion = BUILD_VERSION
-    logger.lifecycle("Compiling version: ${BUILD_VERSION} with timestamp: ${BUILD_TIMESTAMP}.")
+    logger.lifecycle("Compiling version: ${BUILD_VERSION}.")
 }
 
 task clean(type: Delete) {
