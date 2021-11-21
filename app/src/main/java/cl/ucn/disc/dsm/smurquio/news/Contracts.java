@@ -32,7 +32,7 @@ public interface Contracts {
 
   /**
    * Returns all the news.
-   * @return all the news in the backend.
+   * @return all the news in the backend ordered by publishedAt.
    */
   List<News> retrieveNews();
 }
