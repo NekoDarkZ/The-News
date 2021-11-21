@@ -5,6 +5,11 @@ import net.openhft.hashing.LongHashFunction;
 import org.threeten.bp.ZonedDateTime;
 import lombok.Getter;
 
+/**
+ * The News Class.
+ *
+ * @author Sebastián Murquio Castillo
+ */
 public final class News {
 
   @Getter
@@ -32,7 +37,7 @@ public final class News {
   private final String content;
 
   @Getter
-  private final ZonedDateTime published_at;
+  private final ZonedDateTime publishedAt;
 
   /**
    * The Constructor of News.
@@ -43,7 +48,7 @@ public final class News {
    * @param urlImage can be null.
    * @param description can't be null.
    * @param content can't be null.
-   * @param published_at can't be null.
+   * @param publishedAt can't be null.
    */
   public News(final String title,
               final String source,
@@ -52,7 +57,7 @@ public final class News {
               final String urlImage,
               final String description,
               final String content,
-              final ZonedDateTime published_at) {
+              final ZonedDateTime publishedAt) {
 
     // Title
     if(title == null || title.length() < 2) {
@@ -91,9 +96,9 @@ public final class News {
     }
     this.content = content;
 
-    if(published_at == null){
+    if(publishedAt == null){
       throw new IllegalArgumentException("Published At Required");
     }
-    this.published_at = published_at;
+    this.publishedAt = publishedAt;
   }
 }
