@@ -21,18 +21,49 @@
 
 package cl.ucn.disc.dsm.smurquio.news;
 
+import com.github.javafaker.Faker;
+
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Contracts of The News Project.
- *
- * @author Sebastián Murquio Castillo
+ * Contracts Implementation of News with Faker.
  */
-public interface Contracts {
+public class ContractsImplFaker implements Contracts{
 
   /**
    * Returns all the news.
+   *
    * @return all the news in the backend ordered by publishedAt.
    */
-  List<News> retrieveNews(int size);
+  @Override
+  public List<News> retrieveNews(final int size) {
+
+    // Faker provider
+    final Faker faker = new Faker();
+
+    // The list to return
+    final List<News> newsList= new ArrayList<>();
+
+    for(int i = 0; i < size; i++){
+      News news = new News(
+          faker.superhero().name(),
+          faker.artist().name(),
+          faker.artist().name(),
+          faker.internet().url(),
+          faker.internet().url(),
+          faker.backToTheFuture().quote(),
+          faker.starTrek().villain(),
+          ZonedDateTime.now(ZoneId.of("-4"))
+      );
+
+      newsList.add(news);
+    }
+
+
+    return newsList;
+  }
 }
