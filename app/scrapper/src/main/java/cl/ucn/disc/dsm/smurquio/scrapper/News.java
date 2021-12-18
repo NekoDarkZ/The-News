@@ -1,8 +1,7 @@
-package cl.ucn.disc.dsm.smurquio.news;
+package cl.ucn.disc.dsm.smurquio.scrapper;
 
 import net.openhft.hashing.LongHashFunction;
 
-import org.threeten.bp.ZonedDateTime;
 import lombok.Getter;
 
 /**

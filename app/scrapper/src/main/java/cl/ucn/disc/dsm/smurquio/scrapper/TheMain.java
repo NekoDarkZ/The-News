@@ -19,51 +19,61 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package cl.ucn.disc.dsm.smurquio.news;
+package cl.ucn.disc.dsm.smurquio.scrapper;
 
-import com.github.javafaker.Faker;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.commons.io.FileUtils;
+import org.jsoup.Jsoup;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-/**
- * Contracts Implementation of News with Faker.
- */
-public class ContractsImplFaker implements Contracts{
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class TheMain {
 
   /**
-   * Returns all the news.
-   *
-   * @return all the news in the backend ordered by publishedAt.
+   * The JSON parser.
    */
-  @Override
-  public List<News> retrieveNews(final int size) {
+  private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    // Faker provider
-    final Faker faker = new Faker();
+  /**
+   *The starting point.
+   *@param args to use.
+   **/
+  public static void main(String[] args) throws IOException {
 
-    // The list to return
-    final List<News> newsList= new ArrayList<>();
+    //Connect and get the Document
+    String json = Jsoup.connect("http://127.0.0.1:8080/v1/news")
+        .ignoreContentType(true)
+        .execute()
+        .body();
 
-    for(int i = 0; i < size; i++){
-      News news = new News(
-          faker.superhero().name(),
-          faker.artist().name(),
-          faker.artist().name(),
-          faker.internet().url(),
-          faker.internet().url(),
-          faker.backToTheFuture().quote(),
-          faker.starTrek().villain(),
-          String.valueOf(ZonedDateTime.now(ZoneId.of("-3")))
-      );
-
-      newsList.add(news);
-    }
+    FileUtils.writeStringToFile(
+        new File("app/src/main/assets/news.json"),
+        json,
+        StandardCharsets.UTF_8);
 
 
-    return newsList;
+    String data = FileUtils
+        .readFileToString(new File("app/src/main/assets/news.json"), StandardCharsets.UTF_8);
+
+    //Define the Type
+    Type type = new TypeToken<List<News>>(){
+    }.getType();
+
+    //The List of News (string -> List<News>)
+    List<News> newsList = GSON.fromJson(data, type);
+
   }
 }

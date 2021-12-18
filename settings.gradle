@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "The News"
 include ':app'
+include ':app:scrapper'
